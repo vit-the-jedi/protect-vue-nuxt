@@ -1,11 +1,4 @@
 <script setup></script>
 <template>
-  <div>
-    <ArticlesFeed
-      :articlesFeedConfig="{
-        domain: 'protectCom',
-        articleType: 'article',
-      }"
-    />
-  </div>
+  <div>Protect.com home page whats up</div>
 </template>

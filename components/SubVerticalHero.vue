@@ -11,33 +11,28 @@
             <b-col class="cta-col" cols="12" sm="6" md="6" lg="12">
               <slot name="formactions">
                 <ZipCodeForm
-                :intermediaryModalOptions="intermediaryModalOptions"
-                :action="zipcodeAction" />
+                  :intermediaryModalOptions="intermediaryModalOptions"
+                  :action="zipcodeAction"
+                />
               </slot>
             </b-col>
             <b-col cols="12" sm="6" class="d-block d-lg-none">
-              <img class="mobile-image" :src="getImage(heroImage)">
+              <NuxtImg src="/assets/auto-insurance-shield.jpg" />
             </b-col>
           </b-row>
         </div>
         <div class="hero-right">
-          <img :src="getImage(heroImage)">
+          <NuxtImg src="/assets/auto-insurance-shield.jpg" />
         </div>
       </div>
     </div>
-    <div class="skews">
-    </div>
+    <div class="skews"></div>
   </div>
 </template>
 
 <script>
-import ZipCodeForm from './ZipCodeForm.vue';
-
 export default {
-  name: 'SubVerticalHero',
-  components: {
-    ZipCodeForm,
-  },
+  name: "SubVerticalHero",
   props: {
     heroImage: String,
     headline: String,
@@ -47,14 +42,13 @@ export default {
   },
   methods: {
     getImage(image) {
-      return require('../assets/' + image);
+      return "../public/assets/" + image;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-
 .hero-wrapper {
   background-color: $gray-light;
   width: 100%;
@@ -121,7 +115,7 @@ export default {
 
       h1 {
         font-size: 4.3rem;
-        font-family: 'Cantata One', serif;
+        font-family: "Cantata One", serif;
         letter-spacing: -0.07rem;
         line-height: 4.9rem;
 
@@ -138,7 +132,7 @@ export default {
       h2 {
         color: $gray-dark;
         font-size: 2.39rem;
-        font-family: 'Nunito Sans', sans-serif;
+        font-family: "Nunito Sans", sans-serif;
         font-weight: 400;
         margin-top: 1.3rem;
         margin-bottom: 2.3rem;

@@ -1,11 +1,11 @@
 <template>
   <div class="page" id="auto-insurance">
-    <!-- <sub-vertical-hero
+    <sub-vertical-hero
       heroImage="auto-insurance-shield.jpg"
       headline="Compare rates to save on auto insurance."
       subheadline="Get the best car insurance coverage at an affordable price."
       :zipcodeAction="action"
-    ></sub-vertical-hero> -->
+    ></sub-vertical-hero>
 
     <section id="top-companies">
       <insurance-brands

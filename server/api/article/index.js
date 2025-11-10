@@ -1,4 +1,7 @@
 export default defineEventHandler(async (event) => {
+  const store = useStore();
+  const apiUrl = store.articles.apiUrl;
+
   const query = getQuery(event);
   const { urlSlug } = query;
 
@@ -76,10 +79,7 @@ export default defineEventHandler(async (event) => {
     };
 
     try {
-      const { data: article } = await $fetch(
-        "https://us-west-2.cdn.hygraph.com/content/ckwzg7tk528a001z4e7z0bqi0/master",
-        options
-      );
+      const { data: article } = await $fetch(apiUrl, options);
       return article;
     } catch (err) {
       // Log server-side for debugging

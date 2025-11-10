@@ -1,3 +1,19 @@
+<script setup>
+const store = useStore();
+const assetsBaseUrl = store.assetsBaseUrl;
+
+const props = defineProps({
+  testimonialConfig: {
+    type: Object,
+    required: true,
+  },
+});
+
+const imageOverlap = computed(() => {
+  return props.testimonialConfig.imageOverlap === false ? " no-overlap" : "";
+});
+</script>
+
 <template>
   <section id="testimonials" :class="imageOverlap">
     <div class="container">
@@ -11,10 +27,10 @@
                 `${testimonialConfig.imageWrapperClass || 'default'}`
               "
             >
-              <b-img
-                :src="getImage(testimonialConfig.image)"
+              <NuxtImg
+                :src="`${assetsBaseUrl}/testimonials/${testimonialConfig.image}`"
                 :alt="testimonialConfig.title"
-              ></b-img>
+              />
             </b-col>
             <b-col
               :class="
@@ -34,29 +50,6 @@
   </section>
 </template>
 
-<script>
-export default {
-  props: {
-    testimonialConfig: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    imageOverlap() {
-      return this.testimonialConfig.imageOverlap === false ? " no-overlap" : "";
-    },
-  },
-  methods: {
-    getImage(image) {
-      return "../public/assets/testimonials/" + image;
-    },
-  },
-};
-</script>
 <style lang="scss" scoped>
 #testimonials.no-overlap {
   /* styles for images that don't overlap */

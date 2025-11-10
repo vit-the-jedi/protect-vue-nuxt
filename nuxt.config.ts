@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/sitemap",
     "@bootstrap-vue-next/nuxt",
     "@nuxt/image",
+    "@pinia/nuxt",
   ],
   css: [
     "~/scss/main.scss", // Your main Sass file

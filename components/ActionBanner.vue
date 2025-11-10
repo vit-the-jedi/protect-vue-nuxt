@@ -1,3 +1,43 @@
+<script setup>
+const store = useStore();
+const assetsBaseUrl = store.assetsBaseUrl;
+
+const props = defineProps({
+  containerClass: {
+    type: String,
+    default: "",
+  },
+  headline: {
+    type: String,
+    required: true,
+  },
+  subheadline: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  image_top: {
+    type: Number,
+    default: 50,
+  },
+  ctaType: {
+    type: String,
+    default: "rates-dropdown", // 'rates-dropdown' or 'zipcode-form'
+  },
+  ctaConfig: {
+    type: Object,
+    default: () => ({}),
+  },
+  action: {
+    type: String,
+    default: "",
+  },
+});
+</script>
+
 <template>
   <div :class="'action-banner ' + containerClass">
     <div class="spacer" :style="'height: ' + image_top + 'px;'"></div>
@@ -6,11 +46,11 @@
         <b-row>
           <b-col cols="12" md="6">
             <div class="compare-photo">
-              <img
+              <NuxtImg
                 :style="
                   'top: -' + image_top + 'px; margin-top: -' + image_top + 'px;'
                 "
-                :src="getImage(image)"
+                :src="`${assetsBaseUrl}/${image}`"
               />
             </div>
           </b-col>
@@ -34,27 +74,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "ActionBanner",
-  props: {
-    headline: String,
-    subheadline: String,
-    image: String,
-    image_top: String,
-    ctaType: String,
-    ctaConfig: Object,
-    action: String,
-    containerClass: String,
-  },
-  methods: {
-    getImage(image) {
-      return "../public/assets/" + image;
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .action-banner.dad-bike {

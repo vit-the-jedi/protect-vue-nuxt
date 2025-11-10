@@ -1,6 +1,4 @@
-<script setup>
-
-</script>
+<script setup></script>
 <template>
   <div id="protectApp">
     <NuxtLayout>
@@ -8,5 +6,3 @@
     </NuxtLayout>
   </div>
 </template>
-
-

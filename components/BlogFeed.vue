@@ -88,8 +88,6 @@
 </template>
 
 <script>
-import BlogFeedItemHome from "./BlogFeedItemHome.vue";
-
 export default {
   name: "BlogFeed",
   props: {
@@ -99,15 +97,14 @@ export default {
   },
   data() {
     return {
-      articlePath: window.location.pathname,
+      //articlePath: window.location.pathname,
     };
   },
   watch: {
     $route() {
-      this.articlePath = window.location.pathname;
+      //this.articlePath = window.location.pathname;
     },
   },
-  components: { BlogFeedItemHome },
   computed: {
     uniqueArticleTags() {
       return this.$store.state.recentArticlesData.uniqueArticleTags;

@@ -1,75 +1,150 @@
-# Nuxt Minimal Starter
+# Protect.com - Nuxt Application
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A comprehensive insurance comparison and information platform built with Nuxt 3, Vue 3, and Bootstrap Vue Next.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- **Insurance Content Management**: Articles, comparisons, and educational content
+- **Interactive Tools**: Rate calculators, quote forms, and comparison tools
+- **Responsive Design**: Mobile-first approach with Bootstrap integration
+- **SEO Optimized**: Built-in sitemap generation and meta management
+- **Component Library**: Reusable UI components for consistent design
+
+## Tech Stack
+
+- **Framework**: Nuxt 3
+- **UI Library**: Bootstrap Vue Next
+- **Styling**: SCSS with Bootstrap integration
+- **State Management**: Pinia
+- **Images**: Nuxt Image with optimization
+- **Content**: GraphQL API integration via Hygraph CMS
+
+## Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm, pnpm, yarn, or bun package manager
+
+## Getting Started
+
+### 1. Clone and Install
 
 ```bash
-# npm
+# Clone the repository
+git clone <your-repo-url>
+cd protect-nuxt
+
+# Install dependencies
 npm install
-
-# pnpm
+# or
 pnpm install
-
-# yarn
+# or
 yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+### 2. Development Server
 
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
+npm run dev
+# or
+pnpm dev
+# or
+yarn dev
+```
+
+### 3. Environment Setup
+
+The application connects to a Hygraph CMS for content. The API endpoint is configured in [`stores/store.js`](stores/store.js):
+
+```javascript
+articles: {
+  apiUrl: "https://us-west-2.cdn.hygraph.com/content/ckwzg7tk528a001z4e7z0bqi0/master",
+  domain: "protectCom",
+  articleType: "article",
+}
+```
+
+## Project Structure
+
+```
+├── components/          # Vue components
+│   ├── Article.vue     # Article display component
+│   ├── Header.vue      # Site header
+│   ├── Footer.vue      # Site footer
+│   └── ...
+├── pages/              # File-based routing
+│   ├── articles/       # Article pages
+│   ├── car-insurance/  # Insurance category pages
+│   └── ...
+├── layouts/            # Layout templates
+├── stores/             # Pinia state management
+├── scss/               # Global styles and variables
+├── server/             # Server-side API routes
+└── public/             # Static assets
+```
+
+## Key Components
+
+- **Article System**: Dynamic article rendering with SEO optimization
+- **Rate Calculators**: Interactive insurance rate estimation tools
+- **Quote Forms**: Lead generation forms with zip code validation
+- **Testimonials**: Customer testimonial displays
+- **FAQ Components**: Structured data for search engines
+
+## Development Commands
+
+```bash
+# Development server
 npm run dev
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
+# Build for production
 npm run build
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
+# Preview production build
 npm run preview
 
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+# Generate static site
+npm run generate
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Styling
+
+The project uses Bootstrap 5 with custom SCSS:
+
+- Variables: [`scss/_variables.scss`](scss/_variables.scss)
+- Main styles: [`scss/main.scss`](scss/main.scss)
+- Component-specific styles in individual `.vue` files
+
+## API Integration
+
+The application fetches content from Hygraph CMS via GraphQL:
+
+- Articles API: [`server/api/articles/index.js`](server/api/articles/index.js)
+- Single Article: [`server/api/article/index.js`](server/api/article/index.js)
+- Sitemap generation: [`server/api/__sitemap__/urls.js`](server/api/__sitemap__/urls.js)
+
+## Deployment
+
+```bash
+# Build for production
+npm run build
+
+# The built application will be in the .output directory
+# Deploy the .output directory to your hosting provider
+```
+
+## Contributing
+
+1. Follow the existing component structure
+2. Use TypeScript for new components when possible
+3. Maintain responsive design principles
+4. Test across different screen sizes
+
+## Support
+
+For development questions or issues, refer to:
+
+- [Nuxt 3 Documentation](https://nuxt.com/docs)
+- [Bootstrap Vue Next Documentation](https://bootstrap-vue-next.github.io/bootstrap-vue-next/)
+- [Vue 3 Documentation](https://vuejs.org/)
