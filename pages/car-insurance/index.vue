@@ -1,3 +1,50 @@
+<script setup>
+import { useStore } from "@/stores/store.js";
+const store = useStore();
+const assetsBaseUrl = store.assetsBaseUrl;
+
+const config = {
+  action: "https://insure.protect.com/",
+  carriers: [
+    {
+      carrierName: "Progressive",
+      amBestRating: "A+",
+      jdPowerRating: "3/5",
+      bbbScore: "A+",
+      naicScore: "1.33",
+    },
+    {
+      carrierName: "Allstate",
+      amBestRating: "A+",
+      jdPowerRating: "4.1/5",
+      bbbScore: "A+",
+      naicScore: "2.02",
+    },
+    {
+      carrierName: "State Farm",
+      amBestRating: "A++",
+      jdPowerRating: "4.2/5",
+      bbbScore: "A+",
+      naicScore: "1.28",
+    },
+    {
+      carrierName: "Liberty Mutual",
+      amBestRating: "A",
+      jdPowerRating: "3.2/5",
+      bbbScore: "A+",
+      naicScore: "3.56",
+    },
+    {
+      carrierName: "Root Insurance",
+      amBestRating: "A+",
+      jdPowerRating: "4.5/5",
+      bbbScore: "A+",
+      naicScore: "0.9",
+    },
+  ],
+};
+</script>
+
 <template>
   <div class="page" id="auto-insurance">
     <sub-vertical-hero
@@ -26,14 +73,14 @@
       :items="[
         {
           value: {
-            icon: 'health-insurance-icon',
+            icon: 'health-insurance',
             value: 'insurance/health',
           },
           text: 'Health Insurance',
         },
         {
           value: {
-            icon: 'home-icon',
+            icon: 'home',
             value: 'insurance/home',
           },
           text: 'Home Insurance',
@@ -91,13 +138,16 @@
               </p>
             </b-col>
             <b-col cols="12" lg="6">
-              <img src="../assets/company-rank-collage-auto.jpg" />
+              <NuxtImg
+                :src="`${assetsBaseUrl}/company-rank-collage-auto.jpg`"
+                alt="Company Rankings"
+              />
             </b-col>
             <b-col cols="12" class="feed-wrapper">
               <rating-chart
                 bannerHeadline="Compare Over 30 Top Auto Insurance Providers Head-to-head."
-                :action="action"
-                :carriers="carriers"
+                :action="config.action"
+                :carriers="config.carriers"
               />
             </b-col>
           </b-row>
@@ -130,64 +180,6 @@
     <!-- <join-newsletter /> -->
   </div>
 </template>
-
-<script>
-import viewMixin from "~/mixins/viewMixin";
-export default {
-  mixins: [viewMixin],
-  name: "AutoInsurance",
-  props: ["title", "description", "keywords"],
-  created() {
-    // this.setUpViewMetaTags({
-    //   title: this.title,
-    //   ogDescription: this.description,
-    //   keywords: this.keywords,
-    // });
-  },
-  data() {
-    return {
-      action: "https://insure.protect.com/",
-      carriers: [
-        {
-          carrierName: "Progressive",
-          amBestRating: "A+",
-          jdPowerRating: "3/5",
-          bbbScore: "A+",
-          naicScore: "1.33",
-        },
-        {
-          carrierName: "Allstate",
-          amBestRating: "A+",
-          jdPowerRating: "4.1/5",
-          bbbScore: "A+",
-          naicScore: "2.02",
-        },
-        {
-          carrierName: "State Farm",
-          amBestRating: "A++",
-          jdPowerRating: "4.2/5",
-          bbbScore: "A+",
-          naicScore: "1.28",
-        },
-        {
-          carrierName: "Liberty Mutual",
-          amBestRating: "A",
-          jdPowerRating: "3.2/5",
-          bbbScore: "A+",
-          naicScore: "3.56",
-        },
-        {
-          carrierName: "Root Insurance",
-          amBestRating: "A+",
-          jdPowerRating: "4.5/5",
-          bbbScore: "A+",
-          naicScore: "0.9",
-        },
-      ],
-    };
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 h2 {

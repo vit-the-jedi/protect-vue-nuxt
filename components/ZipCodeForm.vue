@@ -1,3 +1,58 @@
+<script setup>
+const props = defineProps({
+  action: {
+    type: String,
+    required: true,
+  },
+  intermediaryModalOptions: {
+    type: Object,
+    required: false,
+  },
+});
+
+// Reactive data
+const showIM = ref(false);
+const zipcode = ref("");
+
+// Router for navigation
+const router = useRouter();
+
+// Methods
+const submit = () => {
+  if (props.action.includes("http")) {
+    const actionUrl = new URL(props.action);
+    actionUrl.searchParams.set("zipcode", zipcode.value);
+
+    if (typeof props.intermediaryModalOptions !== "undefined") {
+      // use the new intermediary modal here
+      props.intermediaryModalOptions.url = actionUrl;
+      showIM.value = true;
+    } else {
+      window.location.href = actionUrl;
+    }
+  } else {
+    router.push({
+      path: props.action,
+      query: { zipcode: zipcode.value },
+    });
+  }
+};
+
+const set = (field, value) => {
+  if (field === "zipcode") {
+    zipcode.value = value;
+  }
+};
+
+const validateZip = () => {
+  if (zipcode.value) {
+    const re = /\d{5}/;
+    return re.test(zipcode.value);
+  }
+  return false;
+};
+</script>
+
 <template>
   <form
     class="zipcode-form"
@@ -9,7 +64,7 @@
     <InputsMain
       :state="true"
       :valid="validateZip()"
-      @input="set('zipcode', $event)"
+      @input="set('zipcode', $event.target.value)"
       :value="zipcode"
       :config="{
         label: 'Enter your zip code',
@@ -21,24 +76,6 @@
         type: 'number',
       }"
     ></InputsMain>
-    <intermediary-modal
-      v-if="showIM"
-      :url="intermediaryModalOptions.url"
-      :delay="intermediaryModalOptions.delay"
-      :text="intermediaryModalOptions.text"
-      :subtext="intermediaryModalOptions.subtext"
-    >
-      <img
-        slot="logo"
-        :src="getImage(intermediaryModalOptions.logo)"
-        class="img-fluid"
-      />
-      <img
-        slot="gif"
-        :src="getImage(intermediaryModalOptions.gif)"
-        class="img-fluid"
-      />
-    </intermediary-modal>
     <ButtonsMain
       :disabled="!validateZip()"
       :config="{
@@ -51,54 +88,6 @@
     ></ButtonsMain>
   </form>
 </template>
-
-<script>
-export default {
-  name: "ZipCodeForm",
-  props: ["action", "intermediaryModalOptions"],
-  data() {
-    return {
-      showIM: false,
-      zipcode: "",
-    };
-  },
-  created() {},
-  methods: {
-    submit() {
-      if (this.action.includes("http")) {
-        const actionUrl = new URL(this.action);
-        actionUrl.searchParams.set("zipcode", this.zipcode);
-
-        if (typeof this.intermediaryModalOptions !== "undefined") {
-          // use the new intermediary modal here
-          this.intermediaryModalOptions.url = actionUrl;
-          this.showIM = true;
-        } else {
-          window.location.href = actionUrl;
-        }
-      } else {
-        this.$router.push({
-          path: this.action,
-          query: { zipcode: this.zipcode },
-        });
-      }
-    },
-    set(field, value) {
-      this[field] = value;
-    },
-    validateZip() {
-      if (this.zipcode) {
-        const re = /\d{5}/;
-        return re.test(this.zipcode);
-      }
-      return false;
-    },
-    getImage(image) {
-      return "../public/assets/" + image;
-    },
-  },
-};
-</script>
 
 <style lang="scss">
 // Large input group styling
@@ -182,10 +171,15 @@ export default {
       }
     }
   }
-
+  svg {
+    fill: #c5c5c5;
+  }
   .valid {
     @include media-breakpoint-down(md) {
       width: 100%;
+    }
+    svg {
+      fill: #3b54ba;
     }
   }
 

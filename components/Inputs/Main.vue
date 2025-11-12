@@ -1,3 +1,58 @@
+<script setup>
+import { iconLoader } from "~/composables/icons.js";
+
+const props = defineProps({
+  config: {
+    type: Object,
+    required: true,
+  },
+  valid: {
+    type: Boolean,
+    required: true,
+  },
+  value: {
+    type: String,
+    required: false,
+  },
+});
+
+const dynamicIcon = iconLoader(
+  props.config.icon ? props.config.icon : "icon-check-mark"
+);
+
+// Reactive data
+const focus = ref(false);
+const touched = ref(false);
+
+// Computed properties
+const currentIconLoaded = computed(() => {
+  return props.config.icon ? true : false;
+});
+
+const state = computed(() => {
+  return props.config.state;
+});
+
+// Emits
+const emit = defineEmits(["input"]);
+
+// Methods
+const onEnterButton = () => {
+  if ("appendIconClickFunction" in props.config) {
+    props.config.appendIconClickFunction();
+  }
+  return false;
+};
+
+const update = () => {
+  // Note: refs work differently in Composition API
+  // This method might need adjustment based on usage
+  emit("input", props.config.name);
+};
+
+console.log(props.config);
+</script>
+
 <template>
   <div
     class="inputs-wrapper"
@@ -5,96 +60,63 @@
   >
     <div
       class="error-message"
-      v-if="!valid && config.invalidFeedback && touched"
+      v-if="!valid && props.config.invalidFeedback && touched"
     >
-      {{ config.invalidFeedback }}
+      {{ props.config.invalidFeedback }}
     </div>
     <div
       class="input-group"
-      v-bind:class="{ focus: false && focus && !config.noFocusStyle }"
+      v-bind:class="{ focus: false && focus && !props.config.noFocusStyle }"
     >
       <b-input-group size="lg">
         <template v-slot:prepend v-if="currentIconLoaded">
           <b-input-group-text>
-            <component :is="currentIcon" :name="currentIcon"> </component>
+            <component :is="dynamicIcon"></component>
           </b-input-group-text>
         </template>
-        <template v-slot:append v-if="!config.noCheckMark">
+        <template v-slot:append v-if="!props.config.noCheckMark">
           <b-input-group-text
             class="indicator"
-            @click="config.appendIconClickFunction()"
+            @click="props.config.appendIconClickFunction()"
           >
-            <component v-if="config.appendIcon" :is="config.appendIcon" />
+            <component
+              v-if="props.config.appendIcon"
+              :is="props.config.appendIcon"
+            />
+            <IconsCheckMark v-else :classes="valid ? 'valid' : 'error'" />
           </b-input-group-text>
         </template>
         <b-form-input
           @keyup.enter.native="onEnterButton()"
           @focus="focus = true"
           @blur="focus = false"
-          :ref="config.name"
-          :type="config.type ? config.type : 'text'"
-          :name="config.name"
-          :value="config.model"
-          :placeholder="config.placeholderText"
+          :ref="props.config.name"
+          :type="props.config.type ? props.config.type : 'text'"
+          :name="props.config.name"
+          :value="props.config.model"
+          :placeholder="props.config.placeholderText"
           @input="
-            $emit('input', $event);
+            emit('input', $event);
             touched = true;
           "
           v-bind:class="{
-            'has-leading-icon': config.icon,
-            'has-check-mark': !config.noCheckMark,
-            'no-check-mark': config.noCheckMark,
+            'has-leading-icon': props.config.icon,
+            'has-check-mark': !props.config.noCheckMark,
+            'no-check-mark': props.config.noCheckMark,
             valid: valid,
           }"
-          :id="config.name"
+          :id="props.config.name"
         >
         </b-form-input>
         <label
-          :for="config.name"
+          :for="props.config.name"
           v-bind:class="{ focus: focus || value, valid: valid }"
-          >{{ config.label }}</label
+          >{{ props.config.label }}</label
         >
       </b-input-group>
     </div>
   </div>
 </template>
-
-<script>
-import iconMixin from "~/mixins/iconMixin";
-
-export default {
-  name: "Inputs",
-  mixins: [iconMixin],
-  props: {
-    config: Object,
-    valid: Boolean,
-    value: String,
-    model: String,
-  },
-  data() {
-    return {
-      focus: false,
-      touched: false,
-    };
-  },
-  methods: {
-    onEnterButton() {
-      if ("appendIconClickFunction" in this.config) {
-        this.config.appendIconClickFunction();
-      }
-      return false;
-    },
-    update() {
-      this.$emit("input", this.$refs[this.config.name].value);
-    },
-  },
-  computed: {
-    state() {
-      return this.config.state;
-    },
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .elixr-icon {

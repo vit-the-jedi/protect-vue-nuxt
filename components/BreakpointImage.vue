@@ -1,20 +1,26 @@
-<template lang="html">
-  <section
-    id="breakpoint-image"
-    :style="`background-image: url(${getImage(image)})`"
-  ></section>
-</template>
+<script setup>
+import { useStore } from "@/stores/store.js";
 
-<script>
-export default {
-  props: ["image"],
-  methods: {
-    getImage(image) {
-      return "../public/assets/" + image;
-    },
+const store = useStore();
+const assetsBaseUrl = store.assetsBaseUrl;
+
+const props = defineProps({
+  image: {
+    type: String,
+    required: true,
   },
-};
+});
+
+const bgStyle = computed(() => {
+  const img = useImage();
+  const imgUrl = img(`${assetsBaseUrl}/${props.image}`); // Adjust path as needed
+  return { backgroundImage: `url(${imgUrl})` };
+});
 </script>
+
+<template lang="html">
+  <section id="breakpoint-image" :style="bgStyle"></section>
+</template>
 
 <style lang="scss" scoped>
 #breakpoint-image {

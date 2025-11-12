@@ -1,3 +1,26 @@
+<script setup>
+import { iconLoader } from "~/composables/icons.js";
+
+const props = defineProps({
+  text: {
+    type: String,
+    required: true,
+  },
+  icon: {
+    type: String,
+    required: false,
+  },
+  value: {
+    type: String,
+    required: false,
+  },
+});
+
+console.log(props);
+
+const iconComponentName = iconLoader(props?.icon || null);
+</script>
+
 <template>
   <span @mouseover="hovered = true" @mouseleave="hovered = false">
     <router-link
@@ -37,20 +60,6 @@
     </router-link>
   </span>
 </template>
-
-<script>
-import iconMixin from "../mixins/iconMixin";
-
-export default {
-  props: ["icon", "text", "value"],
-  mixins: [iconMixin],
-  data() {
-    return {
-      hovered: false,
-    };
-  },
-};
-</script>
 
 <style lang="scss" scoped>
 .item-box {
