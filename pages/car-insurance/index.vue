@@ -74,14 +74,14 @@
         {
           value: {
             icon: 'health-insurance',
-            value: 'insurance/health',
+            value: 'health-insurance',
           },
           text: 'Health Insurance',
         },
         {
           value: {
             icon: 'home',
-            value: 'insurance/home',
+            value: 'home-insurance',
           },
           text: 'Home Insurance',
         },

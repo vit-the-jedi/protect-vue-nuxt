@@ -61,9 +61,6 @@
     @include media-breakpoint-down(sm) {
       height: 650px;
     }
-    @include media-breakpoint-down(xs) {
-      height: 1100px;
-    }
 
     .container {
       z-index: -1;
