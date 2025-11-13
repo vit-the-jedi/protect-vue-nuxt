@@ -7,10 +7,9 @@ export default defineNuxtConfig({
     "@bootstrap-vue-next/nuxt",
     "@nuxt/image",
     "@pinia/nuxt",
+    "@nuxt/eslint",
   ],
-  css: [
-    "~/scss/main.scss", // Your main Sass file
-  ],
+  css: ["~/scss/main.scss"],
   vite: {
     css: {
       preprocessorOptions: {
