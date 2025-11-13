@@ -1,13 +1,11 @@
 //Nuxt composable to dynamically load icons using component :is attribute
 //import composable into any component using dynamic icons
 
-import { ref, defineAsyncComponent } from "vue";
+import { defineAsyncComponent } from "vue";
 
 export function iconLoader(name) {
   if (!name) {
-    console.warn(
-      "Icon name not specified, if this is intended behavior, disregard"
-    );
+    console.warn("Icon name not specified, if this is intended behavior, disregard");
     return;
   }
   try {
@@ -19,9 +17,7 @@ export function iconLoader(name) {
         return component;
       } catch (error) {
         console.error(`❌ Error loading icon component "${name}":`, error);
-        console.error(
-          "Is the icon properly named and located in ~/components/?"
-        );
+        console.error("Is the icon properly named and located in ~/components/?");
 
         // Return a fallback component instead of throwing
         return {
