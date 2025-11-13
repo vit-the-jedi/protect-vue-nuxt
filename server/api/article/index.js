@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
-  const store = useStore();
-  const apiUrl = store.articles.apiUrl;
+  const config = useRuntimeConfig();
+  const apiUrl = config.graphqlApiUrl;
 
   const query = getQuery(event);
   const { urlSlug } = query;

@@ -1,12 +1,10 @@
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+  const apiUrl = config.graphqlApiUrl;
+
   // Get query parameters from the request
   const query = getQuery(event);
-  const {
-    vertical,
-    subvertical,
-    domain = '"protectCom"',
-    articleType = "article",
-  } = query;
+  const { vertical, subvertical, domain = '"protectCom"', articleType = "article" } = query;
 
   if (!domain) {
     throw createError({
@@ -23,10 +21,7 @@ export default defineEventHandler(async (event) => {
       articleType: $articleType
     `;
 
-    const variableDefinitions = [
-      `$domain: Domain!`,
-      `$articleType: ArticleTypes`,
-    ];
+    const variableDefinitions = [`$domain: Domain!`, `$articleType: ArticleTypes`];
 
     if (vertical && vertical !== "") {
       whereClause += `\n      vertical: $vertical`;
@@ -89,10 +84,7 @@ export default defineEventHandler(async (event) => {
       }),
     };
     try {
-      const { data: articlesFeed } = await $fetch(
-        "https://us-west-2.cdn.hygraph.com/content/ckwzg7tk528a001z4e7z0bqi0/master",
-        options
-      );
+      const { data: articlesFeed } = await $fetch(apiUrl, options);
       console.log("Fetched articles:", articlesFeed);
       return articlesFeed;
     } catch (err) {

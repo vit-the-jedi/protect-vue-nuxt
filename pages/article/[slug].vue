@@ -1,4 +1,4 @@
 <script setup></script>
 <template>
-  <Article />
+  <SingleArticle />
 </template>
