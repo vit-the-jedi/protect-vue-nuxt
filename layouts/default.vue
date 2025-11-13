@@ -1,10 +1,7 @@
-<script setup>
-const route = useRoute();
-</script>
-
 <template>
   <div>
-    <Header />
+    <AppHeader />
     <slot />
+    <AppFooter />
   </div>
 </template>
