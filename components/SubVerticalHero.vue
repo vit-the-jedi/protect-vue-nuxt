@@ -16,7 +16,7 @@
       type: String,
       default: "",
     },
-    zipcodeAction: {
+    zipcodeUrl: {
       type: String,
       default: "",
     },
@@ -26,12 +26,14 @@
     },
   });
 
-  const { heroImage, headline, subheadline, zipcodeAction, intermediaryModalOptions } = props;
+  console.log("SubVerticalHero props:", props);
+  console.log("zipcodeUrl value:", props.zipcodeUrl);
+
+  const { heroImage, headline, subheadline, zipcodeUrl, intermediaryModalOptions } = props;
 
   const heroImageSrc = computed(() => {
     return `${assetsBaseUrl}/${heroImage}`;
   });
-  console.log(heroImageSrc.value);
 </script>
 
 <template>
@@ -46,7 +48,7 @@
             </b-col>
             <b-col class="cta-col" cols="12" sm="6" md="6" lg="12">
               <slot name="formactions">
-                <ZipCodeForm :intermediary-modal-options="intermediaryModalOptions" :action="zipcodeAction" />
+                <ZipCodeForm :intermediary-modal-options="intermediaryModalOptions" :action="zipcodeUrl" />
               </slot>
             </b-col>
             <b-col cols="12" sm="6" class="d-block d-lg-none">

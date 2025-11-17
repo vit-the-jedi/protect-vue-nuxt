@@ -1,7 +1,7 @@
 <script setup>
   import { buildImageUrl } from "@/composables/images.js";
 
-  const action = "https://health.protect.com/";
+  const zipCodeUrl = "https://health.protect.com/";
 </script>
 
 <template>
@@ -10,7 +10,7 @@
       hero-image="health-insurance-shield.jpg"
       headline="Compare Health Insurance Quotes"
       subheadline="Protect your family with affordable coverage"
-      :zipcode-action="action"
+      :zipcode-url="zipCodeUrl"
     />
 
     <section id="top-companies">

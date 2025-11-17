@@ -49,7 +49,7 @@
       hero-image="auto-insurance-shield.jpg"
       headline="Compare rates to save on auto insurance."
       subheadline="Get the best car insurance coverage at an affordable price."
-      :zipcode-action="action"
+      :zipcode-url="config.action"
     />
 
     <section id="top-companies">

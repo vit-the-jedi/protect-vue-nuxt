@@ -1,8 +1,10 @@
 <script setup>
   import { buildImageUrl } from "@/composables/images.js";
-  // Data and actions will be defined here when needed
-  const action = "https://homeinsurance.protect.com/"; // TODO: Define zipcode action
-  const carriers = []; // TODO: Define carriers data
+
+  // Define the zipcode URL for home insurance
+  const zipcodeUrl = "https://homeinsurance.protect.com/";
+
+  console.log("Home insurance page - zipcodeUrl:", zipcodeUrl);
 </script>
 
 <template>
@@ -11,7 +13,7 @@
       hero-image="home-insurance-shield.jpg"
       headline="Compare Home Insurance Quotes"
       subheadline="Protect your family with affordable coverage"
-      :zipcode-action="action"
+      :zipcode-url="zipcodeUrl"
     />
 
     <section id="top-companies">
