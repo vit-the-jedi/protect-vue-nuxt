@@ -37,6 +37,7 @@
   //     },
   //   ],
   // });
+  const action = "https://health.protect.com/";
 </script>
 
 <template>

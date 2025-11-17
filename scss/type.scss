@@ -10,6 +10,10 @@ h2 {
   font-family: 'Cantata One', serif;
   color: #3b54ba;
   font-size: 50px;
+
+  @include media-breakpoint-down(md) {
+    font-size: 2rem;
+  }
 }
 h3 {
   font-family: 'Nunito Sans', sans-serif;
