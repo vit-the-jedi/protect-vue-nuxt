@@ -37,6 +37,11 @@ article {
     font-size: 28px;
   }
 }
+div, span, a, li, strong, em, label, input, button, td, th, section, header, footer, nav, main, aside, ul, ol, dl, dt, dd, blockquote, pre, code, textarea, select, option {
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+}
 p {
   font-family: 'Nunito Sans', sans-serif;
   font-weight: 600;
@@ -46,4 +51,5 @@ p {
 
 a {
   color: $blue;
+  text-decoration: unset;
 }

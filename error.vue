@@ -1,7 +1,16 @@
 <script setup>
+  import { clearError } from "#app/composables/error";
+  import { useStore } from "@/stores/store.js";
+
+  const store = useStore();
+  const assetsBaseUrl = store.assetsBaseUrl;
+
   // Get the error object from Nuxt
   const props = defineProps({
-    error: Object,
+    error: {
+      type: Object,
+      default: () => ({ statusCode: 404 }),
+    },
   });
 
   // Set page meta for SEO
@@ -44,53 +53,64 @@
     }
   }
 
-  // Handle error clearing
-  const handleErrorClear = () => clearError({ redirect: "/" });
+  // Clear error function to be called by user actions
+  const handleClearError = (redirectPath = "/") => {
+    clearError({ redirect: redirectPath });
+  };
 </script>
 
 <template>
-  <div class="error-page">
-    <div class="error-container">
-      <div class="error-content">
-        <!-- Large error code display -->
-        <h1 class="error-code-display">
-          {{ error.statusCode || 404 }}
-        </h1>
+  <div class="container">
+    <div class="row">
+      <div class="logo p-4">
+        <a style="cursor: pointer" @click="handleClearError()">
+          <NuxtImg :src="`${assetsBaseUrl}/protect_logo.svg`" alt="Protect.com Logo" width="150" />
+        </a>
+      </div>
+    </div>
+    <div class="error-page">
+      <div class="error-container">
+        <div class="error-content">
+          <!-- Large error code display -->
+          <h1 class="error-code-display">
+            {{ error.statusCode || 404 }}
+          </h1>
 
-        <!-- Error title -->
-        <h1 class="error-title">{{ getErrorTitle() }}</h1>
+          <!-- Error title -->
+          <h1 class="error-title">{{ getErrorTitle() }}</h1>
 
-        <!-- Error message -->
-        <p class="error-message">{{ getErrorMessage() }}</p>
+          <!-- Error message -->
+          <p class="error-message">{{ getErrorMessage() }}</p>
 
-        <!-- Main action buttons -->
-        <div class="error-actions">
-          <NuxtLink to="/" class="btn btn-primary btn-lg">
-            <i class="fas fa-home button-icon" />
-            <span class="button-label">Back to Home</span>
-          </NuxtLink>
-          <NuxtLink to="/car-insurance" class="btn btn-outline-primary btn-lg">
-            <i class="fas fa-car button-icon" />
-            <span class="button-label">Find Car Insurance</span>
-          </NuxtLink>
-        </div>
+          <!-- Main action buttons -->
+          <div class="error-actions">
+            <button class="btn btn-primary btn-lg" @click="handleClearError('/')">
+              <i class="fas fa-home button-icon" />
+              <span class="button-label">Back to Home</span>
+            </button>
+            <button class="btn btn-outline-primary btn-lg" @click="handleClearError('/car-insurance')">
+              <i class="fas fa-car button-icon" />
+              <span class="button-label">Find Car Insurance</span>
+            </button>
+          </div>
 
-        <!-- Quick navigation links for 404 errors -->
-        <div v-if="error.statusCode === 404" class="helpful-links">
-          <p class="helper-text">Or explore these popular sections:</p>
-          <div class="quick-links">
-            <NuxtLink to="/articles" class="quick-link">
-              <i class="fas fa-newspaper" />
-              Articles
-            </NuxtLink>
-            <NuxtLink to="/health-insurance" class="quick-link">
-              <i class="fas fa-heart" />
-              Health Insurance
-            </NuxtLink>
-            <NuxtLink to="/home-insurance" class="quick-link">
-              <i class="fas fa-home" />
-              Home Insurance
-            </NuxtLink>
+          <!-- Quick navigation links for 404 errors -->
+          <div v-if="error.statusCode === 404" class="helpful-links">
+            <p class="helper-text">Or explore these popular sections:</p>
+            <div class="quick-links">
+              <button class="quick-link" @click="handleClearError('/articles')">
+                <i class="fas fa-newspaper" />
+                Articles
+              </button>
+              <button class="quick-link" @click="handleClearError('/health-insurance')">
+                <i class="fas fa-heart" />
+                Health Insurance
+              </button>
+              <button class="quick-link" @click="handleClearError('/home-insurance')">
+                <i class="fas fa-home" />
+                Home Insurance
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -111,7 +131,6 @@
 
   .error-container {
     width: 100%;
-    max-width: 600px;
     margin: 0 auto;
   }
 

@@ -5,11 +5,12 @@ export default defineEventHandler(async (event) => {
   const path = url.pathname;
 
   // Early return for non-relevant paths
-  if (!path.includes("car-insurance") && !path.startsWith("/insurance/")) {
+  if (!path.includes("car-insurance") && !path.startsWith("/insurance/") && path !== "/car-insurance/") {
     return;
   }
   // Handle car insurance state code redirects
-  if (path.includes("car-insurance")) {
+  const pathStateCode = path.split("/")[2];
+  if (path.includes("car-insurance") && pathStateCode) {
     const pathParts = path.split("/");
     const carInsuranceSubPath = pathParts[pathParts.length - 1].toUpperCase();
 
@@ -31,6 +32,7 @@ export default defineEventHandler(async (event) => {
     }
     if (!Object.values(stateMapping).includes(carInsuranceSubPath.toLowerCase())) {
       // Let Nuxt handle 404 by throwing an error - this will render error.vue
+      console.log(`Invalid state code/slug in path: ${path}`);
       throw createError({
         statusCode: 404,
         statusMessage: "Page Not Found",

@@ -40,22 +40,13 @@
   };
   const initStates = () => {
     if (!mapContainerRef.value) {
-      console.error("mapContainerRef.value is null");
       return;
     }
-    console.log("Container element:", mapContainerRef.value);
-    console.log("All children:", mapContainerRef.value.children);
 
     const stateCodes = stateValueMapping.map((state) => state.abbreviation);
     // Use querySelector to find SVG within container
     const allPaths = [...mapContainerRef.value.querySelectorAll(".st0")];
-    console.log("Found .st0 elements:", allPaths.length);
 
-    // Also check for any SVG elements or paths
-    const allSvgElements = [...mapContainerRef.value.querySelectorAll("svg")];
-    const allPathElements = [...mapContainerRef.value.querySelectorAll("path")];
-    console.log("Found SVG elements:", allSvgElements.length);
-    console.log("Found path elements:", allPathElements.length);
     states.value = allPaths
       .filter((p) => stateCodes.includes(p.id.split("_")[0]))
       .map((statePath) => ({ id: statePath.id.split("_")[0], path: statePath }));
@@ -167,7 +158,6 @@
     nextTick(() => {
       initStates();
       addEventsToStates();
-      console.log(states.value, mobileStatesLinkList.value, mapContainerRef.value);
     });
   });
 </script>

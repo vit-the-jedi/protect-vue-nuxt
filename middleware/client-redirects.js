@@ -2,14 +2,15 @@ import { stateMapping, redirectRules } from "~/utils/redirect-contants";
 
 export default defineNuxtRouteMiddleware((to) => {
   // Early return optimization
-  if (!to.path.includes("car-insurance") && !to.path.startsWith("/insurance/")) {
+  if (!to.path.includes("car-insurance") && !to.path.startsWith("/insurance/") && to.path !== "/car-insurance/") {
     return;
   }
 
   // Handle car insurance state code redirects
-  if (to.path.includes("car-insurance")) {
-    const pathParts = to.path.split("/");
-    const carInsuranceSubPath = pathParts[pathParts.length - 1].toUpperCase();
+  const pathParts = to.path.split("/");
+  const pathStateCode = pathParts[2];
+  if (to.path.includes("car-insurance") && pathStateCode) {
+    const carInsuranceSubPath = pathStateCode.toUpperCase();
 
     //redirect 301 if state code is found -> state name
     //do nothing if state name is found
@@ -20,6 +21,7 @@ export default defineNuxtRouteMiddleware((to) => {
       return navigateTo(newPath, { redirectCode: 301 });
     }
     if (!Object.values(stateMapping).includes(carInsuranceSubPath.toLowerCase())) {
+      console.log(`Invalid state code/slug in path: ${to.path}`);
       // Throw error for client-side 404 - this will render error.vue
       throw createError({
         statusCode: 404,
