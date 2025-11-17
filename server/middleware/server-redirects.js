@@ -2,66 +2,68 @@ export default defineEventHandler(async (event) => {
   const url = getRequestURL(event);
   const path = url.pathname;
 
-  console.log("Server redirect middleware checking:", path);
-
-  // State code to state name mapping
-  const stateMapping = {
-    AL: "alabama",
-    AK: "alaska",
-    AZ: "arizona",
-    AR: "arkansas",
-    CA: "california",
-    CO: "colorado",
-    CT: "connecticut",
-    DE: "delaware",
-    FL: "florida",
-    GA: "georgia",
-    HI: "hawaii",
-    ID: "idaho",
-    IL: "illinois",
-    IN: "indiana",
-    IA: "iowa",
-    KS: "kansas",
-    KY: "kentucky",
-    LA: "louisiana",
-    ME: "maine",
-    MD: "maryland",
-    MA: "massachusetts",
-    MI: "michigan",
-    MN: "minnesota",
-    MS: "mississippi",
-    MO: "missouri",
-    MT: "montana",
-    NE: "nebraska",
-    NV: "nevada",
-    NH: "new-hampshire",
-    NJ: "new-jersey",
-    NM: "new-mexico",
-    NY: "new-york",
-    NC: "north-carolina",
-    ND: "north-dakota",
-    OH: "ohio",
-    OK: "oklahoma",
-    OR: "oregon",
-    PA: "pennsylvania",
-    RI: "rhode-island",
-    SC: "south-carolina",
-    SD: "south-dakota",
-    TN: "tennessee",
-    TX: "texas",
-    UT: "utah",
-    VT: "vermont",
-    VA: "virginia",
-    WA: "washington",
-    WV: "west-virginia",
-    WI: "wisconsin",
-    WY: "wyoming",
-  };
-
+  // Early return for non-relevant paths
+  if (!path.includes("car-insurance") && !path.startsWith("/insurance/")) {
+    return;
+  }
   // Handle car insurance state code redirects
   if (path.includes("car-insurance")) {
     const pathParts = path.split("/");
     const stateCode = pathParts[pathParts.length - 1].toUpperCase();
+
+    // State code to state name mapping
+    const stateMapping = {
+      AL: "alabama",
+      AK: "alaska",
+      AZ: "arizona",
+      AR: "arkansas",
+      CA: "california",
+      CO: "colorado",
+      CT: "connecticut",
+      DE: "delaware",
+      FL: "florida",
+      GA: "georgia",
+      HI: "hawaii",
+      ID: "idaho",
+      IL: "illinois",
+      IN: "indiana",
+      IA: "iowa",
+      KS: "kansas",
+      KY: "kentucky",
+      LA: "louisiana",
+      ME: "maine",
+      MD: "maryland",
+      MA: "massachusetts",
+      MI: "michigan",
+      MN: "minnesota",
+      MS: "mississippi",
+      MO: "missouri",
+      MT: "montana",
+      NE: "nebraska",
+      NV: "nevada",
+      NH: "new-hampshire",
+      NJ: "new-jersey",
+      NM: "new-mexico",
+      NY: "new-york",
+      NC: "north-carolina",
+      ND: "north-dakota",
+      OH: "ohio",
+      OK: "oklahoma",
+      OR: "oregon",
+      PA: "pennsylvania",
+      RI: "rhode-island",
+      SC: "south-carolina",
+      SD: "south-dakota",
+      TN: "tennessee",
+      TX: "texas",
+      UT: "utah",
+      VT: "vermont",
+      VA: "virginia",
+      WA: "washington",
+      WV: "west-virginia",
+      WI: "wisconsin",
+      WY: "wyoming",
+    };
 
     if (stateMapping[stateCode]) {
       const stateName = stateMapping[stateCode];
