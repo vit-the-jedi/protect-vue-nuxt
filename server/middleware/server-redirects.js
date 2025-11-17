@@ -1,3 +1,5 @@
+import { stateMapping, redirectRules } from "~/utils/redirect-contants";
+
 export default defineEventHandler(async (event) => {
   const url = getRequestURL(event);
   const path = url.pathname;
@@ -11,60 +13,6 @@ export default defineEventHandler(async (event) => {
     const pathParts = path.split("/");
     const stateCode = pathParts[pathParts.length - 1].toUpperCase();
 
-    // State code to state name mapping
-    const stateMapping = {
-      AL: "alabama",
-      AK: "alaska",
-      AZ: "arizona",
-      AR: "arkansas",
-      CA: "california",
-      CO: "colorado",
-      CT: "connecticut",
-      DE: "delaware",
-      FL: "florida",
-      GA: "georgia",
-      HI: "hawaii",
-      ID: "idaho",
-      IL: "illinois",
-      IN: "indiana",
-      IA: "iowa",
-      KS: "kansas",
-      KY: "kentucky",
-      LA: "louisiana",
-      ME: "maine",
-      MD: "maryland",
-      MA: "massachusetts",
-      MI: "michigan",
-      MN: "minnesota",
-      MS: "mississippi",
-      MO: "missouri",
-      MT: "montana",
-      NE: "nebraska",
-      NV: "nevada",
-      NH: "new-hampshire",
-      NJ: "new-jersey",
-      NM: "new-mexico",
-      NY: "new-york",
-      NC: "north-carolina",
-      ND: "north-dakota",
-      OH: "ohio",
-      OK: "oklahoma",
-      OR: "oregon",
-      PA: "pennsylvania",
-      RI: "rhode-island",
-      SC: "south-carolina",
-      SD: "south-dakota",
-      TN: "tennessee",
-      TX: "texas",
-      UT: "utah",
-      VT: "vermont",
-      VA: "virginia",
-      WA: "washington",
-      WV: "west-virginia",
-      WI: "wisconsin",
-      WY: "wyoming",
-    };
-
     if (stateMapping[stateCode]) {
       const stateName = stateMapping[stateCode];
       const newPath = `/car-insurance/${stateName}`;
@@ -77,15 +25,10 @@ export default defineEventHandler(async (event) => {
 
       await sendRedirect(event, newPath, 301);
       return;
+    } else {
+      return sendRedirect(event, "/not-found", 404); // Redirect to 404 for invalid state codes
     }
   }
-
-  // Handle other common redirects
-  const redirectRules = [
-    { from: "/insurance/auto", to: "/car-insurance", code: 301 },
-    { from: "/insurance/home", to: "/home-insurance", code: 301 },
-    { from: "/insurance/health", to: "/health-insurance", code: 301 },
-  ];
 
   for (const rule of redirectRules) {
     if (path === rule.from || path.startsWith(rule.from + "/")) {

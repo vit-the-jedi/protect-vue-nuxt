@@ -1,64 +1,4 @@
-// Handle other common redirects
-const redirectRules = [
-  // Old insurance paths to new paths
-  { from: "/insurance/auto", to: "/car-insurance", code: 301 },
-  { from: "/insurance/home", to: "/home-insurance", code: 301 },
-  { from: "/insurance/health", to: "/health-insurance", code: 301 },
-  // Add more redirect rules as needed
-];
-
-const stateMapping = {
-  AL: "alabama",
-  AK: "alaska",
-  AZ: "arizona",
-  AR: "arkansas",
-  CA: "california",
-  CO: "colorado",
-  CT: "connecticut",
-  DE: "delaware",
-  FL: "florida",
-  GA: "georgia",
-  HI: "hawaii",
-  ID: "idaho",
-  IL: "illinois",
-  IN: "indiana",
-  IA: "iowa",
-  KS: "kansas",
-  KY: "kentucky",
-  LA: "louisiana",
-  ME: "maine",
-  MD: "maryland",
-  MA: "massachusetts",
-  MI: "michigan",
-  MN: "minnesota",
-  MS: "mississippi",
-  MO: "missouri",
-  MT: "montana",
-  NE: "nebraska",
-  NV: "nevada",
-  NH: "new-hampshire",
-  NJ: "new-jersey",
-  NM: "new-mexico",
-  NY: "new-york",
-  NC: "north-carolina",
-  ND: "north-dakota",
-  OH: "ohio",
-  OK: "oklahoma",
-  OR: "oregon",
-  PA: "pennsylvania",
-  RI: "rhode-island",
-  SC: "south-carolina",
-  SD: "south-dakota",
-  TN: "tennessee",
-  TX: "texas",
-  UT: "utah",
-  VT: "vermont",
-  VA: "virginia",
-  WA: "washington",
-  WV: "west-virginia",
-  WI: "wisconsin",
-  WY: "wyoming",
-};
+import { stateMapping, redirectRules } from "~/utils/redirect-contants";
 
 export default defineNuxtRouteMiddleware((to) => {
   // Early return optimization
@@ -76,6 +16,8 @@ export default defineNuxtRouteMiddleware((to) => {
       const newPath = `/car-insurance/${stateName}`;
       console.log(`Redirecting: ${to.path} -> ${newPath} (301)`);
       return navigateTo(newPath, { redirectCode: 301 });
+    } else {
+      return navigateTo("/404", { redirectCode: 404 }); // Redirect to 404 for invalid state codes
     }
   }
 
