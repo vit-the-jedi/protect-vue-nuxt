@@ -11,10 +11,13 @@ export default defineEventHandler(async (event) => {
   // Handle car insurance state code redirects
   if (path.includes("car-insurance")) {
     const pathParts = path.split("/");
-    const stateCode = pathParts[pathParts.length - 1].toUpperCase();
+    const carInsuranceSubPath = pathParts[pathParts.length - 1].toUpperCase();
 
-    if (stateMapping[stateCode]) {
-      const stateName = stateMapping[stateCode];
+    //redirect 301 if state code is found -> state name
+    //do nothing if state name is found
+    //redirect 404 if invalid state code/slug
+    if (carInsuranceSubPath.length === 2 && stateMapping[carInsuranceSubPath]) {
+      const stateName = stateMapping[carInsuranceSubPath];
       const newPath = `/car-insurance/${stateName}`;
 
       // Set SEO-friendly headers for state redirects
@@ -25,9 +28,15 @@ export default defineEventHandler(async (event) => {
 
       await sendRedirect(event, newPath, 301);
       return;
-    } else {
-      return sendRedirect(event, "/not-found", 404); // Redirect to 404 for invalid state codes
     }
+    if (!Object.values(stateMapping).includes(carInsuranceSubPath.toLowerCase())) {
+      // Let Nuxt handle 404 by throwing an error - this will render error.vue
+      throw createError({
+        statusCode: 404,
+        statusMessage: "Page Not Found",
+      });
+    }
+    return; // No redirect needed for valid state name
   }
 
   for (const rule of redirectRules) {
