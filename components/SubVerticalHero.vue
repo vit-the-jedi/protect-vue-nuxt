@@ -1,3 +1,39 @@
+<script setup>
+  import { useStore } from "@/stores/store.js";
+  const store = useStore();
+  const assetsBaseUrl = store.assetsBaseUrl;
+
+  const props = defineProps({
+    heroImage: {
+      type: String,
+      default: "",
+    },
+    headline: {
+      type: String,
+      default: "",
+    },
+    subheadline: {
+      type: String,
+      default: "",
+    },
+    zipcodeAction: {
+      type: String,
+      default: "",
+    },
+    intermediaryModalOptions: {
+      type: Object,
+      default: () => ({}),
+    },
+  });
+
+  const { heroImage, headline, subheadline, zipcodeAction, intermediaryModalOptions } = props;
+
+  const heroImageSrc = computed(() => {
+    return `${assetsBaseUrl}/${heroImage}`;
+  });
+  console.log(heroImageSrc.value);
+</script>
+
 <template>
   <div class="hero-wrapper">
     <div class="container">
@@ -14,36 +50,18 @@
               </slot>
             </b-col>
             <b-col cols="12" sm="6" class="d-block d-lg-none">
-              <NuxtImg src="/assets/auto-insurance-shield.jpg" />
+              <NuxtImg :src="heroImageSrc" />
             </b-col>
           </b-row>
         </div>
         <div class="hero-right">
-          <NuxtImg src="/assets/auto-insurance-shield.jpg" />
+          <NuxtImg :src="heroImageSrc" />
         </div>
       </div>
     </div>
-    <div class="skews"></div>
+    <div class="skews" />
   </div>
 </template>
-
-<script>
-  export default {
-    name: "SubVerticalHero",
-    props: {
-      heroImage: String,
-      headline: String,
-      subheadline: String,
-      zipcodeAction: String,
-      intermediaryModalOptions: Object,
-    },
-    methods: {
-      getImage(image) {
-        return "../public/assets/" + image;
-      },
-    },
-  };
-</script>
 
 <style scoped lang="scss">
   .hero-wrapper {
@@ -60,6 +78,9 @@
     }
     @include media-breakpoint-down(sm) {
       height: 650px;
+    }
+    @include media-breakpoint-down(xs) {
+      height: 1100px;
     }
 
     .container {
@@ -80,6 +101,10 @@
       }
       @include media-breakpoint-down(sm) {
         height: 650px;
+      }
+      @include media-breakpoint-down(xs) {
+        height: 1100px;
+        flex-wrap: wrap;
       }
 
       .hero-left {
