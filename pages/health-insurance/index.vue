@@ -1,42 +1,6 @@
 <script setup>
-  import { useStore } from "@/stores/store.js";
-  const store = useStore();
-  const assetsBaseUrl = store.assetsBaseUrl;
-  // const config = ref({
-  //   action: "https://health.protect.com/",
-  //   carriers: [
-  //     {
-  //       carrierName: "Humana",
-  //       amBestRating: "A-",
-  //       jdPowerScore: "806/1000",
-  //       bbbScore: "A+",
-  //     },
-  //     {
-  //       carrierName: "Cigna",
-  //       amBestRating: "A",
-  //       jdPowerScore: "781/1000",
-  //       bbbScore: "A+",
-  //     },
-  //     {
-  //       carrierName: "Aetna",
-  //       amBestRating: "A",
-  //       jdPowerScore: "789/1000",
-  //       bbbScore: "A+",
-  //     },
-  //     {
-  //       carrierName: "Highmark",
-  //       amBestRating: "A",
-  //       jdPowerScore: "830/1000",
-  //       bbbScore: "A-",
-  //     },
-  //     {
-  //       carrierName: "Anthem",
-  //       amBestRating: "A-",
-  //       jdPowerScore: "779/1000",
-  //       bbbScore: "A-",
-  //     },
-  //   ],
-  // });
+  import { buildImageUrl } from "@/composables/images.js";
+
   const action = "https://health.protect.com/";
 </script>
 
@@ -132,7 +96,7 @@
               </p>
             </b-col>
             <b-col cols="12" lg="6">
-              <NuxtImg :src="`${assetsBaseUrl}/company-rank-collage-health.jpg`" />
+              <NuxtImg :src="buildImageUrl('company-rank-collage-health.jpg')" />
             </b-col>
             <b-col cols="12" class="feed-wrapper">
               <rating-chart

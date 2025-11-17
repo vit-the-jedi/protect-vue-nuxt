@@ -1,6 +1,5 @@
 <script setup>
-  const store = useStore();
-  const assetsBaseUrl = store.assetsBaseUrl;
+  import { buildImageUrl } from "@/composables/images.js";
 
   const props = defineProps({
     providersConfig: {
@@ -38,7 +37,7 @@
 <template>
   <div class="brands">
     <h2 class="text-center mb-4">
-      <slot></slot>
+      <slot />
     </h2>
     <b-row>
       <b-col
@@ -51,7 +50,7 @@
         :fluid="shouldBeFluid ? isLastItem(provider) : false"
       >
         <NuxtImg
-          :src="`${assetsBaseUrl}/partners/${provider.src}`"
+          :src="buildImageUrl(`partners/${provider.src}`)"
           :alt="provider.name"
           :style="{
             maxWidth: logoMaxWidth,

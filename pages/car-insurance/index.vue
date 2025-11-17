@@ -1,7 +1,5 @@
 <script setup>
-  import { useStore } from "@/stores/store.js";
-  const store = useStore();
-  const assetsBaseUrl = store.assetsBaseUrl;
+  import { buildImageUrl } from "@/composables/images.js";
 
   const config = {
     action: "https://insure.protect.com/",
@@ -136,7 +134,7 @@
               </p>
             </b-col>
             <b-col cols="12" lg="6">
-              <NuxtImg :src="`${assetsBaseUrl}/company-rank-collage-auto.jpg`" alt="Company Rankings" />
+              <NuxtImg :src="buildImageUrl('company-rank-collage-auto.jpg')" alt="Company Rankings" />
             </b-col>
             <b-col cols="12" class="feed-wrapper">
               <rating-chart
